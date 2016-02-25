@@ -602,3 +602,47 @@ tetrahedron.prototype.populate = function (recipient, points_transform) {
     for (var i = offset; i < recipient.vertices.length; i++)
         recipient.vertices[i] = vec3(mult_vec(points_transform, vec4(recipient.vertices[i], 1)));
 };
+
+function pyramid(points_transform) {
+    shape.call(this);
+    if (!arguments.length) return;
+    this.populate(this, points_transform);
+    this.init_buffers();
+}
+inherit(pyramid, shape);
+
+pyramid.prototype.populate = function (recipient, points_transform) {
+    var offset = recipient.vertices.length;
+    var index_offset = recipient.indices.length;
+
+    //recipient.vertices = [vec3(0, 0, 0), vec3(0, 1, 0), vec3(1, 0, 0)];
+    //recipient.normals = [vec3(0, 0, 1), vec3(0, 0, 1), vec3(0, 0, 1)];
+    //recipient.texture_coords = [vec2(0, 0), vec2(0, 1), vec2(1, 0)];
+    //recipient.indices = [0, 1, 2];
+
+    // Bottom square
+    recipient.vertices.push(vec3(-1, -1, 1), vec3(-1, -1, -1), vec3(1, -1, -1));
+    recipient.vertices.push(vec3(1, -1, -1), vec3(1, -1, 1), vec3(-1, -1, 1));
+
+    // Side faces
+    recipient.vertices.push(vec3(-1, -1, -1), vec3(0, 1, 0), vec3(1, -1, -1));
+    recipient.vertices.push(vec3(-1, -1, 1), vec3(0, 1, 0), vec3(-1, -1, -1));
+    recipient.vertices.push(vec3(1, -1, 1), vec3(0, 1, 0), vec3(-1, -1, 1));
+    recipient.vertices.push(vec3(1, -1, -1), vec3(0, 1, 0), vec3(1, -1, 1));
+
+    recipient.texture_coords.push(vec2(0, 0), vec2(0, 1), vec2(1, 0));
+    recipient.texture_coords.push(vec2(0, 0), vec2(0, 1), vec2(1, 0));
+    recipient.texture_coords.push(vec2(0, 0), vec2(0, 1), vec2(1, 0));
+    recipient.texture_coords.push(vec2(0, 0), vec2(0, 1), vec2(1, 0));
+    recipient.texture_coords.push(vec2(0, 0), vec2(0, 1), vec2(1, 0));
+    recipient.texture_coords.push(vec2(0, 0), vec2(0, 1), vec2(1, 0));
+
+    recipient.indices.push(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
+    recipient.flat_normals_from_triples(offset);
+
+    for (var i = index_offset; i < recipient.indices.length; i++)
+        recipient.indices[i] += offset;
+
+    for (var i = offset; i < recipient.vertices.length; i++)
+        recipient.vertices[i] = vec3(mult_vec(points_transform, vec4(recipient.vertices[i], 1)));
+};
