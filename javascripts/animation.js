@@ -36,6 +36,7 @@ function Animation() {
         self.m_fan = new triangle_fan_full(10, mat4());
         self.m_strip = new rectangular_strip(1, mat4());
         self.m_cylinder = new cylindrical_strip(10, mat4());
+        self.m_tetrahedron = new tetrahedron(mat4());
 
         // 1st parameter is camera matrix.  2nd parameter is the projection:  The matrix that determines how depth is treated.  It projects 3D points onto a plane.
         self.graphicsState = new GraphicsState(translate(0, 0, -40), perspective(45, canvas.width / canvas.height, .1, 1000), 0);
