@@ -38,6 +38,7 @@ function Animation() {
         self.m_cylinder = new cylindrical_strip(10, mat4());
         self.m_tetrahedron = new tetrahedron(mat4());
         self.m_pyramid = new pyramid(mat4());
+        self.m_parallelogon = new parallelogon(mat4());
 
         // 1st parameter is camera matrix.  2nd parameter is the projection:  The matrix that determines how depth is treated.  It projects 3D points onto a plane.
         self.graphicsState = new GraphicsState(translate(0, 0, -40), perspective(45, canvas.width / canvas.height, .1, 1000), 0);

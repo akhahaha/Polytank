@@ -638,6 +638,81 @@ pyramid.prototype.populate = function (recipient, points_transform) {
     recipient.texture_coords.push(vec2(0, 0), vec2(0, 1), vec2(1, 0));
 
     recipient.indices.push(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
+
+    recipient.flat_normals_from_triples(offset);
+
+    for (var i = index_offset; i < recipient.indices.length; i++)
+        recipient.indices[i] += offset;
+
+    for (var i = offset; i < recipient.vertices.length; i++)
+        recipient.vertices[i] = vec3(mult_vec(points_transform, vec4(recipient.vertices[i], 1)));
+};
+
+function parallelogon(points_transform) {
+    shape.call(this);
+    if (!arguments.length) return;
+    this.populate(this, points_transform);
+    this.init_buffers();
+}
+inherit(parallelogon, shape);
+
+parallelogon.prototype.populate = function (recipient, points_transform) {
+    var offset = recipient.vertices.length;
+    var index_offset = recipient.indices.length;
+
+    // TODO: Implement parameters
+    var LENGTH = 4;
+    var WIDTH = 2;
+    var HEIGHT = 2;
+    var SLOPE = 0.5;
+
+    var NUM_FLAT_TRIANGLES = 12;
+
+    var indice1 = vec3(-2, 1, -1);
+    var indice2 = vec3(1, 1, -1);
+    var indice3 = vec3(-1, -1, -1);
+    var indice4 = vec3(2, -1, -1);
+    var indice5 = vec3(-2, 1, 1);
+    var indice6 = vec3(1, 1, 1);
+    var indice7 = vec3(-1, -1, 1);
+    var indice8 = vec3(2, -1, 1);
+
+    // Front face
+    recipient.vertices.push(indice1, indice2, indice3);
+    recipient.vertices.push(indice2, indice3, indice4);
+    // Back face
+    recipient.vertices.push(indice5, indice6, indice7);
+    recipient.vertices.push(indice6, indice7, indice8);
+    // Top face
+    recipient.vertices.push(indice5, indice6, indice1);
+    recipient.vertices.push(indice6, indice1, indice2);
+    // Bottom face
+    recipient.vertices.push(indice7, indice8, indice3);
+    recipient.vertices.push(indice8, indice3, indice4);
+    // Left face
+    recipient.vertices.push(indice1, indice5, indice3);
+    recipient.vertices.push(indice5, indice3, indice7);
+    // Right face
+    recipient.vertices.push(indice2, indice6, indice4);
+    recipient.vertices.push(indice6, indice4, indice8);
+
+
+    recipient.texture_coords.push(vec2(0, 0), vec2(0, 1), vec2(1, 0));
+    recipient.texture_coords.push(vec2(0, 0), vec2(0, 1), vec2(1, 0));
+    recipient.texture_coords.push(vec2(0, 0), vec2(0, 1), vec2(1, 0));
+    recipient.texture_coords.push(vec2(0, 0), vec2(0, 1), vec2(1, 0));
+    recipient.texture_coords.push(vec2(0, 0), vec2(0, 1), vec2(1, 0));
+    recipient.texture_coords.push(vec2(0, 0), vec2(0, 1), vec2(1, 0));
+    recipient.texture_coords.push(vec2(0, 0), vec2(0, 1), vec2(1, 0));
+    recipient.texture_coords.push(vec2(0, 0), vec2(0, 1), vec2(1, 0));
+    recipient.texture_coords.push(vec2(0, 0), vec2(0, 1), vec2(1, 0));
+    recipient.texture_coords.push(vec2(0, 0), vec2(0, 1), vec2(1, 0));
+    recipient.texture_coords.push(vec2(0, 0), vec2(0, 1), vec2(1, 0));
+    recipient.texture_coords.push(vec2(0, 0), vec2(0, 1), vec2(1, 0));
+
+    for (var i = 0; i < NUM_FLAT_TRIANGLES * 3; i++) {
+        recipient.indices.push(i);
+    }
     recipient.flat_normals_from_triples(offset);
 
     for (var i = index_offset; i < recipient.indices.length; i++)
