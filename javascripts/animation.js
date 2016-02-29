@@ -210,6 +210,28 @@ var getColorVec = function (red, green, blue, alpha) {
 };
 
 /**
+ * Returns the degree rotation for a periodic pivot given a time.
+ */
+var periodicPivot = function (time, period, maxPivot) {
+    var swaySpeed = period / 4 / maxPivot;
+
+    var time = time % period;
+    var degree = 0;
+    if (time >= 0 && time < period / 4) {
+        degree = (time - 0) / swaySpeed;
+    } else if (time >= period / 4 && time < period / 2) {
+        degree = (time - period / 4) / -swaySpeed + maxPivot;
+    } else if (time >= period / 2 && time < period * 3 / 4) {
+        degree = (time - period / 2) / -swaySpeed;
+    } else {
+        degree = (time - period * 3 / 4) / swaySpeed - maxPivot;
+    }
+
+    console.log(degree);
+    return degree;
+};
+
+/**
  * Draws a stretched out and flattened cube to represent the ground plane.
  * @param model_transform Current matrix
  * @returns {*} Origin matrix
