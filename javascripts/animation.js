@@ -201,8 +201,8 @@ var getColorVec = function (red, green, blue, alpha) {
     return vec4(red / 255.0, green / 255.0, blue / 255.0, alpha / 255.0);
 };
 
-Animation.prototype.update_strings = function (debug_screen_object)		// Strings this particular class contributes to the UI
-{
+Animation.prototype.update_strings = function (debug_screen_object) {
+    // Strings this particular class contributes to the UI
     debug_screen_object.string_map["time"] = "Animation Time: " + this.graphicsState.animation_time / 1000 + "s";
     debug_screen_object.string_map["basis"] = "Showing basis: " + this.m_axis.basis_selection;
     debug_screen_object.string_map["animate"] = "Animation " + (animate ? "on" : "off");
