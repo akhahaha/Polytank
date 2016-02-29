@@ -187,7 +187,22 @@ Animation.prototype.display = function (time) {
     this.basis_id = 0;
 
     var model_transform = mat4();
+
+    // Play scene
+    // Tank 1
+    var tank1Velocity = vec3(1, 0, 0);
+    var tank1Delta = translate(scale_vec(this.graphicsState.animation_time / 100, tank1Velocity));
+    var tank1TurretRotation = periodicPivot(this.graphicsState.animation_time / 1000, 10, 60);
+    var tank1Position = mult(model_transform, tank1Delta);
+
+    // Instantiate objects
     this.ground(model_transform);
+    var tank1 = this.tank(tank1Position, tank1TurretRotation);
+
+    // Update camera
+    if (animate) {
+        this.graphicsState.camera_transform = lookAt(vec3(50, 10, -50), getPos(tank1), vec3(0, 1, 0));
+    }
 };
 
 /**
