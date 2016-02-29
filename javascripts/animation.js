@@ -191,6 +191,13 @@ Animation.prototype.display = function (time) {
 };
 
 /**
+ * Returns the 3D coordinate position of a given mat4.
+ */
+var getPos = function (model_transform) {
+    return vec3(model_transform[0][3], model_transform[1][3], model_transform[1][3]);
+};
+
+/**
  * Generates a vec4 object from RGB values.
  * @param red RGB red value
  * @param green RGB green value
