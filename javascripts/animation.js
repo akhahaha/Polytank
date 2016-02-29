@@ -250,6 +250,32 @@ Animation.prototype.ground = function (model_transform) {
     return origin;
 };
 
+/**
+ * Draws a tank with a swiveling turret.
+ */
+Animation.prototype.tank = function (model_transform, turretRotation) {
+    var armor = new Material(vec4(.5, .5, .5, 1), 1, 1, 1, 40, "textures/woodland.png");
+    var BARREL_LENGTH = 6;
+
+    var origin = model_transform;
+
+    var chassisOrigin = mult(origin, translate(0, 0.5, 0));
+    var chassis = mult(chassisOrigin, scale(2, 0.5, 1.8));
+    this.m_parallelogon.draw(this.graphicsState, chassis, armor);
+
+    var turretOrigin = mult(chassisOrigin, translate(-1.5, 1, 0));
+    turretOrigin = mult(turretOrigin, rotate(turretRotation, 0, 1, 0));
+    var turret = mult(turretOrigin, scale(1, 0.4, 1.5));
+    this.m_parallelogon.draw(this.graphicsState, turret, armor);
+
+    var barrelOrigin = mult(turretOrigin, translate(2.5, 0, 0));
+    var barrel = mult(barrelOrigin, rotate(90, 0, 1, 0));
+    barrel = mult(barrel, scale(0.15, 0.15, 6));
+    this.m_cylinder.draw(this.graphicsState, barrel, armor);
+
+    return origin;
+};
+
 Animation.prototype.update_strings = function (debug_screen_object) {
     // Strings this particular class contributes to the UI
     debug_screen_object.string_map["time"] = "Animation Time: " + this.graphicsState.animation_time / 1000 + "s";
