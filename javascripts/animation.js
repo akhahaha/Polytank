@@ -294,7 +294,6 @@ Animation.prototype.tank = function (model_transform, turretRotation) {
 Animation.prototype.update_strings = function (debug_screen_object) {
     // Strings this particular class contributes to the UI
     debug_screen_object.string_map["time"] = "Animation Time: " + this.graphicsState.animation_time / 1000 + "s";
-    debug_screen_object.string_map["basis"] = "Showing basis: " + this.m_axis.basis_selection;
     debug_screen_object.string_map["animate"] = "Animation " + (animate ? "on" : "off");
-    debug_screen_object.string_map["thrust"] = "Thrust: " + thrust;
+    debug_screen_object.string_map["FPS"] = "FPS: " + 1000 / this.animation_delta_time;
 };
