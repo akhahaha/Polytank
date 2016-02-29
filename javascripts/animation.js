@@ -187,6 +187,7 @@ Animation.prototype.display = function (time) {
     this.basis_id = 0;
 
     var model_transform = mat4();
+    this.ground(model_transform);
 };
 
 /**
@@ -199,6 +200,25 @@ Animation.prototype.display = function (time) {
  */
 var getColorVec = function (red, green, blue, alpha) {
     return vec4(red / 255.0, green / 255.0, blue / 255.0, alpha / 255.0);
+};
+
+/**
+ * Draws a stretched out and flattened cube to represent the ground plane.
+ * @param model_transform Current matrix
+ * @returns {*} Origin matrix
+ */
+Animation.prototype.ground = function (model_transform) {
+    var GROUND_TEXTURE = new Material(vec4(.5, .5, .5, 1), 1, 1, 1, 40, "textures/dirt.jpg");
+    var GROUND_WIDTH = 1000;
+    var GROUND_THICKNESS = 0.1;
+
+    var origin = model_transform;
+    var ground = origin;
+    ground = mult(ground, translate(0, -GROUND_THICKNESS, 0));
+    ground = mult(ground, scale(GROUND_WIDTH, GROUND_THICKNESS, GROUND_WIDTH));
+    this.m_cube.draw(this.graphicsState, ground, GROUND_TEXTURE);
+
+    return origin;
 };
 
 Animation.prototype.update_strings = function (debug_screen_object) {
