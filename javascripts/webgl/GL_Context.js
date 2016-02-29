@@ -48,7 +48,8 @@ function GL_Context( canvas_id )
 			{	this.index = index; this.size = size; this.type = type; this.enabled = enabled; this.normalized = normalized; this.stride = stride; this.pointer = pointer;	};
 
 		function Graphics_Addresses( program )		// Find out the memory addresses internal to the graphics card of each of its variables, and store them here locally for the Javascript to use
-		{	
+		{
+			this.attenuation_factor_loc = gl.getUniformLocation(program, "attenuation_factor");
 			this.shader_attributes = [ 	new Shader_Attribute( gl.getAttribLocation( program, "vPosition"), 3, gl.FLOAT, true, false, 0, 0 ),
 										new Shader_Attribute( gl.getAttribLocation( program, "vNormal"), 3, gl.FLOAT, true, false, 0, 0 ),
 										new Shader_Attribute( gl.getAttribLocation( program, "vTexCoord"), 2, gl.FLOAT, false, false, 0, 0 ),

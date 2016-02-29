@@ -135,11 +135,16 @@ shape.prototype.update_uniforms = function (graphicsState, model_transform, mate
     gl.uniformMatrix4fv(g_addrs.projection_camera_model_transform_loc, false, flatten(projection_camera_model_transform));
     gl.uniformMatrix3fv(g_addrs.camera_model_transform_normal_loc, false, flatten(camera_model_transform_normal));
 
-    var N_LIGHTS = 2, lightPositions = [], lightColors = [], lightPositions_flattened = [], lightColors_flattened = [];
-    lightPositions.push(vec4(100, 0, 0, 1));
-    lightColors.push(vec4(0, 0, 1, 1));
-    lightPositions.push(vec4(0, 100, 0, 1));
+    var N_LIGHTS = 2, lightPositions = [], lightColors = [], attenuations = [],
+        lightPositions_flattened = [], lightColors_flattened = [];
+    lightPositions.push(vec4(10 * Math.sin(graphicsState.animation_time / 1000), 0, 0, 1));
+    lightColors.push(vec4(0, 1, 0, 1));
+    attenuations.push(.000001);
+
+    lightPositions.push(vec4(0, 10 * Math.sin(graphicsState.animation_time / 1000), 0, 1));
     lightColors.push(vec4(1, 0, 0, 1));
+    attenuations.push(.000001);
+
     for (var i = 0; i < 4 * N_LIGHTS; i++) {
         lightPositions_flattened[i] = lightPositions[Math.floor(i / 4)][i % 4];
         lightColors_flattened[i] = lightColors[Math.floor(i / 4)][i % 4];
@@ -147,6 +152,7 @@ shape.prototype.update_uniforms = function (graphicsState, model_transform, mate
 
     gl.uniform4fv(g_addrs.lightPosition_loc, lightPositions_flattened);
     gl.uniform4fv(g_addrs.lightColor_loc, lightColors_flattened);
+    gl.uniform1fv(g_addrs.attenuation_factor_loc, attenuations);
 
 
     gl.uniform4fv(g_addrs.color_loc, material.color);		// Send a desired shape-wide color to the graphics card
