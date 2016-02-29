@@ -685,23 +685,22 @@ parallelogon.prototype.populate = function (recipient, points_transform) {
 
     // Front face
     recipient.vertices.push(indice1, indice2, indice3);
-    recipient.vertices.push(indice2, indice3, indice4);
+    recipient.vertices.push(indice3, indice2, indice4);
     // Back face
     recipient.vertices.push(indice5, indice6, indice7);
-    recipient.vertices.push(indice6, indice7, indice8);
+    recipient.vertices.push(indice7, indice6, indice8);
     // Top face
     recipient.vertices.push(indice5, indice6, indice1);
-    recipient.vertices.push(indice6, indice1, indice2);
+    recipient.vertices.push(indice1, indice6, indice2);
     // Bottom face
     recipient.vertices.push(indice7, indice8, indice3);
-    recipient.vertices.push(indice8, indice3, indice4);
+    recipient.vertices.push(indice3, indice8, indice4);
     // Left face
     recipient.vertices.push(indice1, indice5, indice3);
-    recipient.vertices.push(indice5, indice3, indice7);
+    recipient.vertices.push(indice3, indice5, indice7);
     // Right face
     recipient.vertices.push(indice2, indice6, indice4);
-    recipient.vertices.push(indice6, indice4, indice8);
-
+    recipient.vertices.push(indice4, indice6, indice8);
 
     recipient.texture_coords.push(vec2(0, 0), vec2(0, 1), vec2(1, 0));
     recipient.texture_coords.push(vec2(0, 0), vec2(0, 1), vec2(1, 0));
