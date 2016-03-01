@@ -189,19 +189,32 @@ Animation.prototype.display = function (time) {
     var model_transform = mat4();
 
     // Play scene
-    // Tank 1
-    var tank1Velocity = vec3(1, 0, 0);
-    var tank1Delta = translate(scale_vec(this.graphicsState.animation_time / 100, tank1Velocity));
-    var tank1TurretRotation = periodicPivot(this.graphicsState.animation_time / 1000, 10, 60);
-    var tank1Position = mult(model_transform, tank1Delta);
-
     // Instantiate objects
     this.ground(model_transform);
-    var tank1 = this.tank(tank1Position, tank1TurretRotation);
+
+    var NUM_TANKS = 5;
+    var TANK_VELOCITY = vec3(1, 0, 0);
+    var INTERVAL = 10;
+
+    var tanks = [];
+    for (var i = 0; i < NUM_TANKS; i++) {
+        // Add Delay
+        var tankDelta = mat4;
+        var tankPosition = mult(model_transform, translate(0, 0, 10*i));
+        if (this.graphicsState.animation_time / 100 > (i * INTERVAL)) {
+            tankDelta = translate(scale_vec(this.graphicsState.animation_time / 100 - i * INTERVAL, TANK_VELOCITY));
+            tankPosition = mult(tankPosition, tankDelta);
+        }
+
+        var tankTurretRotation = periodicPivot(this.graphicsState.animation_time / 1000, 10, 60);
+
+        // Draw tank
+        tanks[i] = this.tank(tankPosition, tankTurretRotation);
+    }
 
     // Update camera
     if (animate) {
-        this.graphicsState.camera_transform = lookAt(vec3(50, 10, -50), getPos(tank1), vec3(0, 1, 0));
+        this.graphicsState.camera_transform = lookAt(vec3(50, 10, -50), getPos(tanks[1]), vec3(0, 1, 0));
     }
 };
 
